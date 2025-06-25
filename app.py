@@ -49,4 +49,19 @@ if option == "📁 Upload PDF Resume":
     uploaded_file = st.file_uploader("Upload PDF", type=["pdf"])
     if uploaded_file:
         resume_text = extract_text_from_pdf(uploaded_file)
-        st.text_area("📄 Extracted Resume Text",_
+        st.text_area("📄 Extracted Resume Text", resume_text, height=200)
+
+elif option == "⌨️ Paste Resume Text":
+    resume_text = st.text_area("✍️ Paste resume text:", height=200)
+
+if resume_text.strip():
+    if st.button("🔍 Classify Resume"):
+        with st.spinner("Classifying..."):
+            try:
+                prompt = generate_prompt(resume_text)
+                response = inference.generate_text(prompt=prompt)
+                category = response.strip().split("\n")[0]
+                st.success(f"✅ Predicted Category: **{category}**")
+            except Exception as e:
+                st.error(f"❌ Error: {str(e)}")
+
