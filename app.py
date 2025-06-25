@@ -83,23 +83,6 @@ if option == "📁 Upload PDFs":
                 except Exception as e:
                     st.error(f"❌ Error: {str(e)}")
 
-elif option == "🖼️ Upload Images":
-    uploaded_images = st.file_uploader("Upload resume screenshots (PNG/JPG)", type=["png", "jpg", "jpeg"], accept_multiple_files=True)
-    if uploaded_images:
-        for uploaded_file in uploaded_images:
-            st.markdown("---")
-            st.subheader(f"🖼️ {uploaded_file.name}")
-            resume_text = extract_text_from_image(uploaded_file)
-            st.text_area("🖼️ Extracted Text", resume_text, height=150, key=uploaded_file.name)
-
-            with st.spinner("Classifying..."):
-                try:
-                    prompt = generate_prompt(resume_text)
-                    response = inference.generate_text(prompt=prompt)
-                    category = response.strip().split("\n")[0]
-                    st.success(f"✅ Predicted Category: **{category}**")
-                except Exception as e:
-                    st.error(f"❌ Error: {str(e)}")
 
 elif option == "⌨️ Paste Text":
     resume_text = st.text_area("✍️ Paste resume text below:", height=200)
