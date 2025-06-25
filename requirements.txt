@@ -1,0 +1,6 @@
+streamlit
+ibm-watsonx-ai
+PyMuPDF
+pytesseract
+opencv-python-headless
+pillow
